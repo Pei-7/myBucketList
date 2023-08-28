@@ -68,6 +68,7 @@ class ListTableViewController: UITableViewController {
         
         
         if let source = unwindSegue.source as? DetailTableViewController, let target = source.target {
+            
             if let indexPath = tableView.indexPathForSelectedRow {
                 targets[indexPath.row] = target
                 tableView.reloadRows(at: [indexPath], with: .automatic)
