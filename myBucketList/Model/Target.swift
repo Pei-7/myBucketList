@@ -7,6 +7,21 @@
 
 import Foundation
 
+struct List: Codable {
+    var title: String?
+    var content: [Target]?
+    
+    static func saveList(list: [List]) {
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(list) else {return}
+        UserDefaults.standard.set(data, forKey: "lists")
+        
+        if let dataString = String(data: data, encoding: .utf8) {
+            print(dataString)
+        }
+    }
+}
+
 struct Target: Codable {
     var name: String?
     var status: Bool
@@ -17,10 +32,6 @@ struct Target: Codable {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(target) else {return}
         UserDefaults.standard.set(data, forKey: "targets")
-        
-        if let dataString = String(data: data, encoding: .utf8) {
-            print(dataString)
-        }
     }
     
     static func loadTarget() -> [Target]? {
