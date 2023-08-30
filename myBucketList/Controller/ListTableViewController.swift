@@ -88,6 +88,7 @@ class ListTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? DetailTableViewController, let row = tableView.indexPathForSelectedRow?.row {
             controller.target = targets[row]
+            controller.editable = false
         }
     }
     
@@ -114,7 +115,32 @@ class ListTableViewController: UITableViewController {
             
         }
     }
-    
+
+
+//    @IBSegueAction func addData(_ coder: NSCoder) -> DetailTableViewController? {
+//        let controller = DetailTableViewController(coder: coder)
+//        controller?.targetName?.isEnabled = true
+//        controller?.targetName?.becomeFirstResponder()
+//        controller?.targetRemarks?.isEditable = true
+//        controller?.targetStatus?.isEnabled = true
+//        controller?.targetPhotoButton?.isEnabled = true
+//        return controller
+//    }
+//
+//
+//    @IBSegueAction func showData(_ coder: NSCoder) -> DetailTableViewController? {
+//        let controller = DetailTableViewController(coder: coder)
+//        controller?.targetName?.isUserInteractionEnabled = false
+//        print("1",controller?.targetName?.isUserInteractionEnabled)
+//        print("2",controller?.targetName ?? "error here" )
+//        print("3",controller  ?? "error here" )
+//        controller?.targetRemarks?.isEditable = false
+//        controller?.targetRemarks?.backgroundColor = .white
+//        controller?.targetStatus?.isUserInteractionEnabled = false
+//        controller?.targetPhotoButton?.isUserInteractionEnabled = false
+//        return controller
+//    }
+//
     
     
     /*

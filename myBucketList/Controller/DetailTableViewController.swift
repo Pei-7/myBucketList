@@ -18,9 +18,19 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     
     @IBOutlet var targetPhotoButton: UIButton!
     
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
+    @IBOutlet var editButton: UIBarButtonItem!
+    
+    
     var target: Target?
 
     var ImageUpdated: Bool!
+    
+    var editable: Bool!
+    
+    
+    
     
     func updateUI() {
         if let target {
@@ -33,6 +43,30 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
                 let image = UIImage(contentsOfFile: imageUrl.path)
                 targetPhotoButton.setImage(image, for: .normal)
             }
+        }
+        
+        if editable != nil {
+            editable = false
+        } else {
+            editable = true
+        }
+        
+        print(editable)
+        
+        if editable == true {
+            targetName.becomeFirstResponder()
+            editButton.isHidden = true
+            saveButton.isHidden = false
+        } else {
+            targetName.isUserInteractionEnabled = false
+            targetStatus.isUserInteractionEnabled = false
+            targetRemarks.isEditable = false
+            targetPhotoButton.isUserInteractionEnabled = false
+
+            editButton.isHidden = false
+            saveButton.isHidden = true
+            
+            
         }
     }
     
@@ -61,7 +95,6 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
         super.viewDidLoad()
         
         updateUI()
-
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -111,7 +144,18 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
         present(picker, animated: true)
     }
     
-
+    @IBAction func edit(_ sender: UIButton) {
+        
+        sender.isHidden = true
+        saveButton.isHidden = false
+        
+        targetName.isUserInteractionEnabled = true
+        targetStatus.isUserInteractionEnabled = true
+        targetRemarks.isEditable = true
+        targetPhotoButton.isUserInteractionEnabled = true
+        
+    }
+    
     // MARK: - Table view data source
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
