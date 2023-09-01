@@ -22,6 +22,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     
     @IBOutlet var editButton: UIBarButtonItem!
     
+    var list: List!
     
     var target: Target?
 
@@ -51,7 +52,6 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             editable = true
         }
         
-        print(editable)
         
         if editable == true {
             targetName.becomeFirstResponder()
@@ -93,7 +93,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(list)
         updateUI()
         
         // Uncomment the following line to preserve selection between presentations
@@ -123,6 +123,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
         }
         
         target = Target(name: targetName, status: status, remarks: remarks, imageName: imageName)
+        print("7777",target)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

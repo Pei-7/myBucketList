@@ -9,11 +9,12 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
 
+    @IBOutlet var numberLabel: UITextField!
     @IBOutlet var titleTextField: UITextField!
     
-    var list : [List]!{
+    var lists : [List]!{
         didSet{
-            List.saveList(list: list)
+            List.saveList(list: lists)
         }
     }
     
@@ -23,30 +24,38 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
         titleTextField.delegate = self
         super.awakeFromNib()
         // Initialization code
+        
+        
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
     }
+    
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if titleTextField.text!.count < 1 {
             textField.resignFirstResponder()
-            list.removeLast()
-            List.saveList(list: list)
-            
-            print("cell",list)
-            
+            print("lists.count -- cell before remove",lists.count)
+            lists.removeLast()
+            print("lists.count -- cell after remove",lists.count)
+            //print("inCell-Nil",lists!)
             
         } else {
             textField.resignFirstResponder()
             titleTextField.isUserInteractionEnabled = false
-            list[index].title = textField.text!
+            lists[index].title = textField.text!
+            //print("inCell-filled",lists!)
             
         }
+        List.saveList(list: lists)
+        //print("retunToHome",lists!)
         return true
     }
 

@@ -9,30 +9,46 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
     
-    var targets = [Target]() {
-        didSet {
-            Target.saveTarget(target: targets)
-        }
-    }
+    var list : List!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    var listIndex : Int!
+    
+//    var targets = [Target]()
+//    {
+//        didSet {
+//            Target.saveTarget(target: targets)
+//        }
+//    }
+    
+    func updateContent(index:Int) {
         let decoder = JSONDecoder()
-        if let data = UserDefaults.standard.data(forKey: "targets") {
+        if let data = UserDefaults.standard.data(forKey: "list\(listIndex!)") {
             do {
-                targets = try decoder.decode([Target].self, from: data)
+                list = try decoder.decode(List.self, from: data)
+                print("*****updateContent","list\(index)",list!)
             } catch {
                 print(error)
             }
         }
-        tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
+    }
+    
+    func saveContent(content: List,index: Int) {
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(content) else {return}
+        UserDefaults.standard.set(data, forKey: "list\(listIndex!)")
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        47.2
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        updateContent(index: listIndex)
+        print("checkListIndex!!",listIndex!)
+//        tableView.backgroundView = UIImageView(image: UIImage(named: "note background"))
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     // MARK: - Table view data source
@@ -44,16 +60,19 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return targets.count
+        list.content.count
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        updateContent(index: listIndex)
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListTableViewCell", for: indexPath) as! ListTableViewCell
-        cell.targetNameLabel.text = targets[indexPath.row].name
+        cell.targetNameLabel.text = list.content[indexPath.row].name
+        
+        print("8888","\(indexPath.row) / \(list.content.count)",list.content[indexPath.row].name)
         cell.statusButton.tag = indexPath.row
         
-        if targets[indexPath.row].status == true {
+        if list.content[indexPath.row].status == true {
             cell.statusButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .normal)
             cell.targetNameLabel.isEnabled = false
         } else {
@@ -67,28 +86,39 @@ class ListTableViewController: UITableViewController {
     @IBAction func unwindToListTableViewController(_ unwindSegue: UIStoryboardSegue) {
         // Use data from the view controller which initiated the unwind segue
         
-        
-        if let source = unwindSegue.source as? DetailTableViewController, let target = source.target {
-            
+        if let source = unwindSegue.source as? DetailTableViewController, let updatedTarget = source.target {
+
             if let indexPath = tableView.indexPathForSelectedRow {
-                targets[indexPath.row] = target
-                tableView.reloadRows(at: [indexPath], with: .automatic)
+                list.content[indexPath.row] = updatedTarget
+                saveContent(content: list, index: indexPath.row)
+                print("1111",list.content)
             } else {
-                targets.insert(target, at: targets.count)
-                tableView.reloadData()
+                print("2222",updatedTarget)
+                list.content.append(updatedTarget)
+                saveContent(content: list, index: list.content.count-1)
+                print("midCheck",list.content)
             }
+            print("3333")
+//            List.saveListContent(listContent: list)
+//            List.saveListContent(list: [list], index: listIndex)
+            print("final check",list)
+            tableView.reloadData()
         }
         
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        targets.remove(at: indexPath.row)
+        list.content.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+//        List.saveListContent(list: [list], index: listIndex)
+        saveContent(content: list, index: listIndex)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? DetailTableViewController, let row = tableView.indexPathForSelectedRow?.row {
-            controller.target = targets[row]
+            controller.list = list
+            controller.target = list.content[row]
+            print("detailcontroller",controller.target)
             controller.editable = false
         }
     }
@@ -98,7 +128,7 @@ class ListTableViewController: UITableViewController {
         if sender.currentImage == UIImage(systemName: "circle") {
             sender.setImage(UIImage(systemName: "circle.inset.filled"), for: .normal)
             let index = sender.tag
-            targets[index].status = true
+            list.content[index].status = true
             
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) as? ListTableViewCell {
@@ -107,18 +137,54 @@ class ListTableViewController: UITableViewController {
         } else {
             sender.setImage(UIImage(systemName: "circle"), for: .normal)
             let index = sender.tag
-            targets[index].status = false
+            list.content[index].status = false
             
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) as? ListTableViewCell {
                 cell.targetNameLabel.isEnabled = true
             }
-            
+        }
+        saveContent(content: list, index: listIndex)
+    }
+
+    
+    func checkListsInfo() {
+        if let data = UserDefaults.standard.data(forKey: "lists") {
+            let decoder = JSONDecoder()
+            do {
+                let item = try decoder.decode([List].self, from: data)
+                print("*****checkListsInfo:",item)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    func checkTargetInfo(key: String) {
+        
+        print("*****checkTargetInfo - KeyName:",listIndex!,key)
+        
+        if let data = UserDefaults.standard.data(forKey: key) {
+            let decoder = JSONDecoder()
+            print("1111")
+            do {
+                print("2222")
+                let item = try decoder.decode(List.self, from: data)
+                print("*****checkTargetInfo:",item)
+            } catch {
+                print("3333")
+                print(error ?? "checkTargetInfoError")
+            }
         }
     }
 
-
-//    @IBSegueAction func addData(_ coder: NSCoder) -> DetailTableViewController? {
+    @IBAction func check(_ sender: Any) {
+        checkListsInfo()
+        checkTargetInfo(key: "list\(listIndex!)")
+    }
+    
+    
+    //    @IBSegueAction func addData(_ coder: NSCoder) -> DetailTableViewController? {
 //        let controller = DetailTableViewController(coder: coder)
 //        controller?.targetName?.isEnabled = true
 //        controller?.targetName?.becomeFirstResponder()
