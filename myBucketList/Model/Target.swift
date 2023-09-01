@@ -9,6 +9,7 @@ import Foundation
 
 struct List: Codable {
     var title: String?
+    var uuid: String
     var content: [Target] = []
     
     static func saveList(list: [List]) {

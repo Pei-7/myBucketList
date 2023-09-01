@@ -93,7 +93,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         //print("標題是否為空值",checkNil)
         if checkNil == false {
-            let newList = List(title: "",content: [])
+            
+            let newList = List(title: "", uuid: UUID().uuidString,content: [])
             lists.append(newList)
         }
 
@@ -117,6 +118,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             lists.remove(at: indexPath.row)
             homeTableView.deleteRows(at: [indexPath], with: .automatic)
             print("lists.count - commit after",lists.count)
+            
+            UserDefaults.standard.removeObject(forKey: "lists\(lists[indexPath.row].uuid)")
+            tableView.reloadData()
         }
         
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -153,7 +157,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let controller = ListTableViewController(coder: coder)
         if let index = homeTableView.indexPathForSelectedRow?.row {
             print("out of range??",index,"lists.count",lists.count)
-            controller?.listIndex = index
+            controller?.listUuid = lists[index].uuid
             controller?.list = lists[index]
             print("segue at Home page: ",index,lists[index])
             

@@ -56,7 +56,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKV-LY-zfO">
                                             <rect key="frame" x="71" y="13" width="301" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="22"/>
+                                            <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="28"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -82,7 +82,7 @@
                                     <segue destination="Gow-al-gKX" kind="show" id="lHg-DP-TOx"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="play" id="o8d-zp-2oo">
+                            <barButtonItem enabled="NO" systemItem="play" id="o8d-zp-2oo">
                                 <connections>
                                     <action selector="check:" destination="xQc-h8-Hay" id="tjB-Tb-PFi"/>
                                 </connections>
@@ -98,15 +98,42 @@
         <scene sceneID="BeH-cV-u1Y">
             <objects>
                 <tableViewController id="Gow-al-gKX" customClass="DetailTableViewController" customModule="myBucketList" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="ocJ-rM-BT5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" sectionFooterHeight="-1" id="ocJ-rM-BT5">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="sectionIndexBackgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <sections>
                             <tableViewSection headerTitle="" id="dzQ-cZ-luq">
                                 <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCell" rowHeight="180" id="LuV-ba-Ksc">
+                                        <rect key="frame" x="0.0" y="50" width="390" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LuV-ba-Ksc" id="Nm2-88-4s7">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="180"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tae-CG-D0c">
+                                                    <rect key="frame" x="20" y="11" width="350" height="158"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="15"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <segue destination="cVm-zG-2dT" kind="presentation" destinationCreationSelector="showFullImage:" id="Psu-le-wht"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="LYX-pu-JYT">
-                                        <rect key="frame" x="0.0" y="50" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="230" width="390" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LYX-pu-JYT" id="AeI-ph-Lzp">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
@@ -115,13 +142,13 @@
                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dbY-DA-2Bc">
                                                     <rect key="frame" x="98" y="13" width="272" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="28"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="目標" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hix-sg-bz0">
-                                                    <rect key="frame" x="20" y="14" width="47" height="32"/>
+                                                    <rect key="frame" x="20" y="14" width="55" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="28"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -130,7 +157,7 @@
                                         <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="60" id="AcR-2J-wA9">
-                                        <rect key="frame" x="0.0" y="110" width="390" height="60"/>
+                                        <rect key="frame" x="0.0" y="290" width="390" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AcR-2J-wA9" id="KoD-3d-9nW">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
@@ -141,9 +168,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="狀態" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UUz-eZ-OIN">
-                                                    <rect key="frame" x="20" y="14" width="47" height="32"/>
+                                                    <rect key="frame" x="20" y="14" width="55" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="28"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -151,26 +178,26 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="240" id="z3x-UO-MIl">
-                                        <rect key="frame" x="0.0" y="170" width="390" height="240"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="560" id="z3x-UO-MIl">
+                                        <rect key="frame" x="0.0" y="350" width="390" height="560"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z3x-UO-MIl" id="8al-SU-R8E">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="240"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="560"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="備注" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ht2-xC-pKF">
-                                                    <rect key="frame" x="20" y="14" width="47" height="32"/>
+                                                    <rect key="frame" x="20" y="14" width="55" height="37"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="28"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PwY-jg-nf9">
-                                                    <rect key="frame" x="98" y="11" width="275" height="218"/>
+                                                    <rect key="frame" x="98" y="11" width="275" height="549"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <color key="textColor" systemColor="labelColor"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="26"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                                     <userDefinedRuntimeAttributes>
@@ -179,40 +206,6 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </textView>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="240" id="LuV-ba-Ksc">
-                                        <rect key="frame" x="0.0" y="410" width="390" height="240"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LuV-ba-Ksc" id="Nm2-88-4s7">
-                                            <rect key="frame" x="0.0" y="0.0" width="390" height="240"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="圖片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLx-ke-gLa">
-                                                    <rect key="frame" x="20" y="14" width="47" height="32"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="24"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tae-CG-D0c">
-                                                    <rect key="frame" x="92" y="11" width="281" height="218"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" image="plus" catalog="system"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="15"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                    <connections>
-                                                        <action selector="addPhoto:" destination="Gow-al-gKX" eventType="touchUpInside" id="MTr-ap-htd"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -227,19 +220,25 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="kRM-ju-1L9">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="save" id="37G-fX-ywK">
+                            <barButtonItem image="checkmark" catalog="system" id="37G-fX-ywK">
                                 <connections>
                                     <segue destination="lSA-ng-pyf" kind="unwind" unwindAction="unwindToListTableViewController:" id="waF-cf-GIs"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="edit" id="6zr-Iz-FaS">
+                            <barButtonItem image="pencil" catalog="system" id="6zr-Iz-FaS">
                                 <connections>
                                     <action selector="edit:" destination="Gow-al-gKX" id="Icj-X2-9X7"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Add Photo" image="photo" catalog="system" id="Kox-CM-G5h">
+                                <connections>
+                                    <action selector="addPhoto:" destination="Gow-al-gKX" id="EFb-J2-jNH"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPhotoButton" destination="Kox-CM-G5h" id="YXZ-VJ-aJC"/>
                         <outlet property="editButton" destination="6zr-Iz-FaS" id="3o9-RP-SxA"/>
                         <outlet property="saveButton" destination="37G-fX-ywK" id="VOm-fH-8Vn"/>
                         <outlet property="targetName" destination="dbY-DA-2Bc" id="2vj-mY-Of7"/>
@@ -251,7 +250,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vjS-F7-XuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="lSA-ng-pyf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2594.6564885496182" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="2593.8461538461538" y="2.8436018957345972"/>
+        </scene>
+        <!--Full Image View Controller-->
+        <scene sceneID="YTa-UF-hfI">
+            <objects>
+                <viewController id="cVm-zG-2dT" customClass="FullImageViewController" customModule="myBucketList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O0R-1m-PLJ">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AJl-5I-gM0">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="843"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="JJa-um-u5X"/>
+                        <color key="backgroundColor" red="0.97647058959999999" green="0.96470588450000005" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NYC-VC-gHD"/>
+                    <connections>
+                        <outlet property="fullImageView" destination="AJl-5I-gM0" id="3Ew-eE-zzC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SaA-5A-H8D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3347.6923076923076" y="21.327014218009477"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="GCM-ft-2C1">
@@ -305,7 +330,7 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Bucket Lists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvr-yq-IQh">
-                                <rect key="frame" x="76" y="91" width="238" height="63"/>
+                                <rect key="frame" x="76" y="70" width="238" height="63"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="ChenYuluoyan-Thin-Monospaced" family="Chenyuluoyan" pointSize="48"/>
                                 <nil key="textColor"/>
@@ -345,7 +370,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="amL-P0-6BH">
-                                <rect key="frame" x="168" y="142" width="54" height="44"/>
+                                <rect key="frame" x="168" y="130" width="54" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" image="plus" catalog="system">
@@ -406,9 +431,12 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="eye" catalog="system" width="128" height="79"/>
         <image name="note background" width="390" height="844"/>
+        <image name="pencil" catalog="system" width="128" height="113"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -30,6 +30,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     
     var editable: Bool!
     
+    @IBOutlet var addPhotoButton: UIBarButtonItem!
     
     
     
@@ -40,9 +41,12 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             targetRemarks.text = target.remarks
             
             if let imageName = target.imageName {
+                
                 let imageUrl = URL.documentsDirectory.appending(path: imageName).appendingPathExtension(for: .jpeg)
                 let image = UIImage(contentsOfFile: imageUrl.path)
+                targetPhotoButton.imageView?.contentMode = .scaleAspectFill
                 targetPhotoButton.setImage(image, for: .normal)
+
             }
         }
         
@@ -57,14 +61,15 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             targetName.becomeFirstResponder()
             editButton.isHidden = true
             saveButton.isHidden = false
+            addPhotoButton.isHidden = false
         } else {
             targetName.isUserInteractionEnabled = false
             targetStatus.isUserInteractionEnabled = false
             targetRemarks.isEditable = false
-            targetPhotoButton.isUserInteractionEnabled = false
 
             editButton.isHidden = false
             saveButton.isHidden = true
+            addPhotoButton.isHidden = true
             
             
         }
@@ -80,6 +85,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
                     if let image = image as? UIImage {
                         self.targetPhotoButton.setImage(image, for: .normal)
                         self.ImageUpdated = true
+                        self.tableView.reloadData()
                     }
                     else if let error {
                         print(error)
@@ -103,6 +109,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let targetName = targetName.text ?? ""
         let status = targetStatus.isOn
@@ -121,6 +128,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             let imageUrl = URL.documentsDirectory.appending(path: imageName!).appendingPathExtension(for: .jpeg)
             try? imageData?.write(to: imageUrl)
         }
+        
         
         target = Target(name: targetName, status: status, remarks: remarks, imageName: imageName)
         print("7777",target)
@@ -145,17 +153,45 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
         present(picker, animated: true)
     }
     
+
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        switch indexPath.row {
+        case 0:
+            if targetPhotoButton.currentImage == nil {
+                return 0
+            } else {
+                return 200
+            }
+          
+        case 3:
+            return 560
+        default:
+            return 60
+        }
+    }
+    
     @IBAction func edit(_ sender: UIButton) {
         
         sender.isHidden = true
         saveButton.isHidden = false
+        addPhotoButton.isHidden = false
         
         targetName.isUserInteractionEnabled = true
         targetStatus.isUserInteractionEnabled = true
         targetRemarks.isEditable = true
-        targetPhotoButton.isUserInteractionEnabled = true
         
     }
+    
+
+    @IBSegueAction func showFullImage(_ coder: NSCoder) -> FullImageViewController? {
+        let controller = FullImageViewController(coder: coder)
+        if let imageName = target?.imageName {
+            controller?.imageName = imageName
+        }
+            return controller
+    }
+    
     
     // MARK: - Table view data source
 

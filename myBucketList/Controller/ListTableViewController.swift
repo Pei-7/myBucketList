@@ -11,7 +11,7 @@ class ListTableViewController: UITableViewController {
     
     var list : List!
     
-    var listIndex : Int!
+    var listUuid : String!
     
 //    var targets = [Target]()
 //    {
@@ -20,22 +20,22 @@ class ListTableViewController: UITableViewController {
 //        }
 //    }
     
-    func updateContent(index:Int) {
+    func updateContent(uuid:String) {
         let decoder = JSONDecoder()
-        if let data = UserDefaults.standard.data(forKey: "list\(listIndex!)") {
+        if let data = UserDefaults.standard.data(forKey: "list\(listUuid!)") {
             do {
                 list = try decoder.decode(List.self, from: data)
-                print("*****updateContent","list\(index)",list!)
+                print("*****updateContent","list\(uuid)",list!)
             } catch {
                 print(error)
             }
         }
     }
     
-    func saveContent(content: List,index: Int) {
+    func saveContent(content: List,uuid: String) {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(content) else {return}
-        UserDefaults.standard.set(data, forKey: "list\(listIndex!)")
+        UserDefaults.standard.set(data, forKey: "list\(uuid)")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -45,8 +45,8 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        updateContent(index: listIndex)
-        print("checkListIndex!!",listIndex!)
+        updateContent(uuid: listUuid)
+        print("checkListIndex!!",listUuid!)
 //        tableView.backgroundView = UIImageView(image: UIImage(named: "note background"))
         
     }
@@ -65,7 +65,7 @@ class ListTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        updateContent(index: listIndex)
+        updateContent(uuid: listUuid)
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListTableViewCell", for: indexPath) as! ListTableViewCell
         cell.targetNameLabel.text = list.content[indexPath.row].name
         
@@ -90,12 +90,12 @@ class ListTableViewController: UITableViewController {
 
             if let indexPath = tableView.indexPathForSelectedRow {
                 list.content[indexPath.row] = updatedTarget
-                saveContent(content: list, index: indexPath.row)
+                saveContent(content: list, uuid: list.uuid)
                 print("1111",list.content)
             } else {
                 print("2222",updatedTarget)
                 list.content.append(updatedTarget)
-                saveContent(content: list, index: list.content.count-1)
+                saveContent(content: list, uuid: list.uuid)
                 print("midCheck",list.content)
             }
             print("3333")
@@ -111,7 +111,7 @@ class ListTableViewController: UITableViewController {
         list.content.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
 //        List.saveListContent(list: [list], index: listIndex)
-        saveContent(content: list, index: listIndex)
+        saveContent(content: list, uuid: listUuid)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -144,7 +144,7 @@ class ListTableViewController: UITableViewController {
                 cell.targetNameLabel.isEnabled = true
             }
         }
-        saveContent(content: list, index: listIndex)
+        saveContent(content: list, uuid: listUuid)
     }
 
     
@@ -162,7 +162,7 @@ class ListTableViewController: UITableViewController {
     
     func checkTargetInfo(key: String) {
         
-        print("*****checkTargetInfo - KeyName:",listIndex!,key)
+        print("*****checkTargetInfo - KeyName:",listUuid!,key)
         
         if let data = UserDefaults.standard.data(forKey: key) {
             let decoder = JSONDecoder()
@@ -180,7 +180,7 @@ class ListTableViewController: UITableViewController {
 
     @IBAction func check(_ sender: Any) {
         checkListsInfo()
-        checkTargetInfo(key: "list\(listIndex!)")
+        checkTargetInfo(key: "list\(listUuid!)")
     }
     
     
