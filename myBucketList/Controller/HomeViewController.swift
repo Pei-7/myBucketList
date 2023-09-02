@@ -22,6 +22,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var emptyRow : Int?
     var editingIndexPath : IndexPath?
     
+    var completionCount: Int!
+    var totalCount: Int!
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lists.count
     }
@@ -35,6 +38,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.lists = lists
         cell.index = indexPath.row
         
+        checkCompletion(row: indexPath.row)
+        cell.completionCount = completionCount
+        cell.totalCount = totalCount
+        cell.completionLabel.text = "\(cell.completionCount)/\(cell.totalCount)"
+
         print(editingIndexPath,"ready to change name")
         if let editingIndexPath {
             if editingIndexPath == indexPath {
@@ -50,9 +58,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        47.2
+    override func viewWillAppear(_ animated: Bool) {
+        homeTableView.reloadData()
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        47.2
+//    }
 
     fileprivate func updateInfo() {
         // Do any additional setup after loading the view.
@@ -66,6 +78,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error)
             }
         }
+    }
+    
+    func checkCompletion(row: Int) {
+        completionCount = 0
+        totalCount = 0
+        let uuid = lists[row].uuid
+        let keyName = "list\(uuid)"
+        print("*_*_*_*_*_*_* keyName",keyName)
+        let decoder = JSONDecoder()
+        if let data = UserDefaults.standard.data(forKey: keyName) {
+            do {
+                let items = try decoder.decode(List.self, from: data)
+                totalCount = items.content.count
+                
+                for item in items.content {
+                    if item.status == true {
+                        completionCount += 1
+                    }
+                }
+                print("*_*_*_*_*_*_* ",items,"count: ",items.content.count)
+            } catch {
+                print(error)
+            }
+        }
+        print("*_*_*_*_*_*_* totalCount",totalCount,"completionCount",completionCount)
     }
     
     override func viewDidLoad() {
@@ -114,12 +151,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+            
+            
             print("lists.count - commit before",lists.count)
+            UserDefaults.standard.removeObject(forKey: "lists\(lists[indexPath.row].uuid)")
             lists.remove(at: indexPath.row)
             homeTableView.deleteRows(at: [indexPath], with: .automatic)
             print("lists.count - commit after",lists.count)
-            
-            UserDefaults.standard.removeObject(forKey: "lists\(lists[indexPath.row].uuid)")
+
             tableView.reloadData()
         }
         
@@ -193,6 +232,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
+
     
     /*
          // MARK: - Navigation
@@ -205,3 +245,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
          */
         
 }
+

@@ -11,6 +11,10 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
 
     @IBOutlet var numberLabel: UITextField!
     @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var completionLabel: UILabel!
+    
+    var completionCount = 0
+    var totalCount = 0
     
     var lists : [List]!{
         didSet{

@@ -38,15 +38,17 @@ class ListTableViewController: UITableViewController {
         UserDefaults.standard.set(data, forKey: "list\(uuid)")
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        47.2
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        47.2
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         updateContent(uuid: listUuid)
         print("checkListIndex!!",listUuid!)
+        
+        tableView.rowHeight = UITableView.automaticDimension
 //        tableView.backgroundView = UIImageView(image: UIImage(named: "note background"))
         
     }
@@ -147,41 +149,41 @@ class ListTableViewController: UITableViewController {
         saveContent(content: list, uuid: listUuid)
     }
 
-    
-    func checkListsInfo() {
-        if let data = UserDefaults.standard.data(forKey: "lists") {
-            let decoder = JSONDecoder()
-            do {
-                let item = try decoder.decode([List].self, from: data)
-                print("*****checkListsInfo:",item)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    func checkTargetInfo(key: String) {
-        
-        print("*****checkTargetInfo - KeyName:",listUuid!,key)
-        
-        if let data = UserDefaults.standard.data(forKey: key) {
-            let decoder = JSONDecoder()
-            print("1111")
-            do {
-                print("2222")
-                let item = try decoder.decode(List.self, from: data)
-                print("*****checkTargetInfo:",item)
-            } catch {
-                print("3333")
-                print(error ?? "checkTargetInfoError")
-            }
-        }
-    }
+//
+//    func checkListsInfo() {
+//        if let data = UserDefaults.standard.data(forKey: "lists") {
+//            let decoder = JSONDecoder()
+//            do {
+//                let item = try decoder.decode([List].self, from: data)
+//                print("*****checkListsInfo:",item)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//    }
+//
+//    func checkTargetInfo(key: String) {
+//
+//        print("*****checkTargetInfo - KeyName:",listUuid!,key)
+//
+//        if let data = UserDefaults.standard.data(forKey: key) {
+//            let decoder = JSONDecoder()
+//            print("1111")
+//            do {
+//                print("2222")
+//                let item = try decoder.decode(List.self, from: data)
+//                print("*****checkTargetInfo:",item)
+//            } catch {
+//                print("3333")
+//                print(error ?? "checkTargetInfoError")
+//            }
+//        }
+//    }
 
-    @IBAction func check(_ sender: Any) {
-        checkListsInfo()
-        checkTargetInfo(key: "list\(listUuid!)")
-    }
+//    @IBAction func check(_ sender: Any) {
+//        checkListsInfo()
+//        checkTargetInfo(key: "list\(listUuid!)")
+//    }
     
     
     //    @IBSegueAction func addData(_ coder: NSCoder) -> DetailTableViewController? {
