@@ -30,6 +30,7 @@ class FullImageViewController: UIViewController {
     }
     
 
+    
     /*
     // MARK: - Navigation
 

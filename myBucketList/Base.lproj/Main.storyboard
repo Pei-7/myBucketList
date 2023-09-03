@@ -13,21 +13,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="myBucketList" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1140" y="4"/>
-        </scene>
         <!--List Table View Controller-->
         <scene sceneID="AFP-hD-meP">
             <objects>
@@ -93,7 +78,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAy-NF-anc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1620" y="3"/>
+            <point key="canvasLocation" x="2580" y="-685"/>
         </scene>
         <!--Detail Table View Controller-->
         <scene sceneID="BeH-cV-u1Y">
@@ -251,7 +236,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vjS-F7-XuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="lSA-ng-pyf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2593.8461538461538" y="2.8436018957345972"/>
+            <point key="canvasLocation" x="3369" y="-685"/>
         </scene>
         <!--Full Image View Controller-->
         <scene sceneID="YTa-UF-hfI">
@@ -262,7 +247,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AJl-5I-gM0">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="777"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="771"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -277,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SaA-5A-H8D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3347.6923076923076" y="21.327014218009477"/>
+            <point key="canvasLocation" x="4176.9230769230771" y="-685.30805687203792"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="GCM-ft-2C1">
@@ -413,7 +398,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UnB-Xj-D5k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1978.4615384615383" y="-685.30805687203792"/>
+            <point key="canvasLocation" x="1817" y="-685"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xqz-Od-6tr">
@@ -449,9 +434,6 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

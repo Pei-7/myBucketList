@@ -30,6 +30,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        updateInfo()
         let cell = homeTableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
         let row = indexPath.row
         cell.numberLabel.text = "\(row + 1)."
@@ -51,7 +52,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             }
         }
-        
+        editingIndexPath = nil
         return cell
     }
     
@@ -66,7 +67,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let decoder = JSONDecoder()
             do {
                 lists = try decoder.decode([List].self, from: data)
-                print("*****updateInfo:",lists)
+//                print("*****updateInfo:",lists)
             } catch {
                 print(error)
             }
@@ -95,7 +96,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print(error)
             }
         }
-        print("*_*_*_*_*_*_* totalCount",totalCount,"completionCount",completionCount)
+//        print("*_*_*_*_*_*_* totalCount",totalCount,"completionCount",completionCount)
     }
     
     override func viewDidLoad() {
@@ -156,7 +157,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return UISwipeActionsConfiguration(actions: [editAction])
     }
         
-//
+
 //    func changeName(indexPath: IndexPath) {
 //            print("change name!")
 //

@@ -55,6 +55,7 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
             
         }
         List.saveList(list: lists)
+        print(lists)
         return true
     }
 
