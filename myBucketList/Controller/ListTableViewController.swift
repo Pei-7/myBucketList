@@ -13,43 +13,24 @@ class ListTableViewController: UITableViewController {
     
     var listUuid : String!
     
-//    var targets = [Target]()
-//    {
-//        didSet {
-//            Target.saveTarget(target: targets)
-//        }
-//    }
-    
     func updateContent(uuid:String) {
         let decoder = JSONDecoder()
         if let data = UserDefaults.standard.data(forKey: "list\(listUuid!)") {
             do {
                 list = try decoder.decode(List.self, from: data)
-                print("*****updateContent","list\(uuid)",list!)
+                print("*updateContent","list\(uuid)",list!)
             } catch {
                 print(error)
             }
         }
     }
-    
-    func saveContent(content: List,uuid: String) {
-        let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(content) else {return}
-        UserDefaults.standard.set(data, forKey: "list\(uuid)")
-    }
-    
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        47.2
-//    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         updateContent(uuid: listUuid)
-        print("checkListIndex!!",listUuid!)
-        
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.backgroundView = UIImageView(image: UIImage(named: "note background"))
         
     }
     
@@ -68,10 +49,9 @@ class ListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         updateContent(uuid: listUuid)
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ListTableViewCell", for: indexPath) as! ListTableViewCell
         cell.targetNameLabel.text = list.content[indexPath.row].name
-        
-        print("8888","\(indexPath.row) / \(list.content.count)",list.content[indexPath.row].name)
         cell.statusButton.tag = indexPath.row
         
         if list.content[indexPath.row].status == true {
@@ -88,45 +68,35 @@ class ListTableViewController: UITableViewController {
     @IBAction func unwindToListTableViewController(_ unwindSegue: UIStoryboardSegue) {
         // Use data from the view controller which initiated the unwind segue
         
-        if let source = unwindSegue.source as? DetailTableViewController, let updatedTarget = source.target {
+        if let source = unwindSegue.source as? DetailTableViewController,
+            let updatedTarget = source.target {
 
             if let indexPath = tableView.indexPathForSelectedRow {
                 list.content[indexPath.row] = updatedTarget
-                saveContent(content: list, uuid: list.uuid)
-                print("1111",list.content)
             } else {
-                print("2222",updatedTarget)
                 list.content.append(updatedTarget)
-                saveContent(content: list, uuid: list.uuid)
-                print("midCheck",list.content)
             }
-            print("3333")
-//            List.saveListContent(listContent: list)
-//            List.saveListContent(list: [list], index: listIndex)
-            print("final check",list)
+            List.saveContent(content: list, uuid: list.uuid)
             tableView.reloadData()
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         list.content.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-//        List.saveListContent(list: [list], index: listIndex)
-        saveContent(content: list, uuid: listUuid)
+        List.saveContent(content: list, uuid: listUuid)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? DetailTableViewController, let row = tableView.indexPathForSelectedRow?.row {
             controller.list = list
             controller.target = list.content[row]
-            print("detailcontroller",controller.target)
             controller.editable = false
         }
     }
     
     @IBAction func markComplete(_ sender: UIButton) {
-        print("button clicked")
+
         if sender.currentImage == UIImage(systemName: "circle") {
             sender.setImage(UIImage(systemName: "circle.inset.filled"), for: .normal)
             let index = sender.tag
@@ -146,7 +116,8 @@ class ListTableViewController: UITableViewController {
                 cell.targetNameLabel.isEnabled = true
             }
         }
-        saveContent(content: list, uuid: listUuid)
+
+        List.saveContent(content: list, uuid: listUuid)
     }
 
 //

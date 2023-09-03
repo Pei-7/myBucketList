@@ -7,14 +7,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var homeTableView: UITableView!
     
     var lists = [List]() {
         didSet{
             List.saveList(list: lists)
-            print("home didSet",lists)
         }
     }
     
@@ -24,6 +23,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var completionCount: Int!
     var totalCount: Int!
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lists.count
@@ -31,27 +31,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeTableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
-        cell.numberLabel.text = "\(indexPath.row + 1)."
-        cell.titleTextField.text = lists[indexPath.row].title
+        let row = indexPath.row
+        cell.numberLabel.text = "\(row + 1)."
+        cell.titleTextField.text = lists[row].title
         cell.titleTextField.isUserInteractionEnabled = false
-//        cell.titleTextField.tag = indexPath.row
         cell.lists = lists
-        cell.index = indexPath.row
+        cell.index = row
         
-        checkCompletion(row: indexPath.row)
+        checkCompletion(row: row)
         cell.completionCount = completionCount
         cell.totalCount = totalCount
-        cell.completionLabel.text = "\(cell.completionCount)/\(cell.totalCount)"
+        cell.completionLabel.text = "\(cell.completionCount) / \(cell.totalCount)"
 
-        print(editingIndexPath,"ready to change name")
         if let editingIndexPath {
             if editingIndexPath == indexPath {
-            print(editingIndexPath,"changing name")
                 DispatchQueue.main.async {
                     cell.titleTextField.isUserInteractionEnabled = true
                     cell.titleTextField.becomeFirstResponder()
                 }
-
             }
         }
         
@@ -62,10 +59,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         homeTableView.reloadData()
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        47.2
-//    }
-
     fileprivate func updateInfo() {
         // Do any additional setup after loading the view.
         
@@ -107,8 +100,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(lists)
-        
+
         homeTableView.delegate = self
         homeTableView.dataSource = self
         updateInfo()
@@ -118,19 +110,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func addList(_ sender: Any) {
         updateInfo()
         List.saveList(list: lists)
-        //print("01",lists)
+
         for (index,list) in lists.enumerated() {
             if list.title == "" {
-                //print("nilTitle",index)
                 emptyRow = index
                 checkNil = true
             } else {
                 checkNil = false
             }
         }
-        //print("標題是否為空值",checkNil)
+        
         if checkNil == false {
-            
             let newList = List(title: "", uuid: UUID().uuidString,content: [])
             lists.append(newList)
         }
@@ -141,23 +131,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = homeTableView.cellForRow(at: indexPath) as? HomeTableViewCell
     
         cell?.titleTextField.placeholder = "請輸入心願清單名稱"
-//        DispatchQueue.main.async {
-            cell?.titleTextField.isUserInteractionEnabled = true
-//        }
-        
-        
-        
+        cell?.titleTextField.isUserInteractionEnabled = true
         cell?.titleTextField.becomeFirstResponder()
         }
         
         func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             
-            
-            print("lists.count - commit before",lists.count)
             UserDefaults.standard.removeObject(forKey: "lists\(lists[indexPath.row].uuid)")
             lists.remove(at: indexPath.row)
             homeTableView.deleteRows(at: [indexPath], with: .automatic)
-            print("lists.count - commit after",lists.count)
 
             tableView.reloadData()
         }
@@ -174,14 +156,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return UISwipeActionsConfiguration(actions: [editAction])
     }
         
-        
-    func changeName(indexPath: IndexPath) {
-            print("change name!")
-            
-            let cell = homeTableView.cellForRow(at: indexPath) as? HomeTableViewCell
-            cell?.titleTextField.isUserInteractionEnabled = true
-            cell?.titleTextField.becomeFirstResponder()
-        }
+//
+//    func changeName(indexPath: IndexPath) {
+//            print("change name!")
+//
+//            let cell = homeTableView.cellForRow(at: indexPath) as? HomeTableViewCell
+//            cell?.titleTextField.isUserInteractionEnabled = true
+//            cell?.titleTextField.becomeFirstResponder()
+//        }
         
         
     @IBAction func reset(_ sender: Any) {
@@ -199,39 +181,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             controller?.listUuid = lists[index].uuid
             controller?.list = lists[index]
             print("segue at Home page: ",index,lists[index])
-            
-            //print(lists[index])
         }
         return controller
     }
     
-    
-
-    @IBAction func check(_ sender: Any) {
-        //updateInfo()
-        checkListsInfo(item: lists)
-        //print(lists)
-        print("lists.count -- check button",lists.count)
-
-    }
-    
-    
-    
-    
-    func checkListsInfo(item: [List]) {
-        if let data = UserDefaults.standard.data(forKey: "lists") {
-            let decoder = JSONDecoder()
-            do {
-                let item = try decoder.decode([List].self, from: data)
-                print("*****checkInfo:",item)
-            } catch {
-                print(error)
-            }
-        }
-        
-    }
-    
-    
+//
+//
+//    @IBAction func check(_ sender: Any) {
+//        //updateInfo()
+//        checkListsInfo(item: lists)
+//        //print(lists)
+//        print("lists.count -- check button",lists.count)
+//    }
+//
+//    func checkListsInfo(item: [List]) {
+//        if let data = UserDefaults.standard.data(forKey: "lists") {
+//            let decoder = JSONDecoder()
+//            do {
+//                let item = try decoder.decode([List].self, from: data)
+//                print("*****checkInfo:",item)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//
+//    }
 
     
     /*

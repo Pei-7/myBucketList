@@ -21,21 +21,10 @@ class FullImageViewController: UIViewController {
         if let imageName {
             let imageUrl = URL.documentsDirectory.appending(path: imageName).appendingPathExtension(for: .jpeg)
             if let image = UIImage(contentsOfFile: imageUrl.path) {
-                fullImageView.image = image                
+                fullImageView.image = image
+                fullImageView.contentMode = .scaleAspectFit
             }
             
-            
-
-            
-//            let imageWidth = (image?.size.width)!
-//            let imageHeight = (image?.size.height)!
-//            print("w,h",imageWidth,imageHeight)
-//
-//            if Double(imageWidth) > Double(imageHeight) {
-//                fullImageView.frame.size = CGSize(width: fullImageView.frame.width, height: (image?.size.height)!)
-//                fullImageView.frame.origin = CGPoint(x: 0, y: 0)
-//            }
-           
         }
 
     }

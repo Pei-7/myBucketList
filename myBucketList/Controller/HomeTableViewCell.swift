@@ -28,14 +28,12 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
         titleTextField.delegate = self
         super.awakeFromNib()
         // Initialization code
-        
-        
+
     }
     
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
         
     }
@@ -46,9 +44,7 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
         
         if titleTextField.text!.count < 1 {
             textField.resignFirstResponder()
-            print("lists.count -- cell before remove",lists.count)
             lists.removeLast()
-            print("lists.count -- cell after remove",lists.count)
             //print("inCell-Nil",lists!)
             
         } else {
@@ -59,7 +55,6 @@ class HomeTableViewCell: UITableViewCell,UITextFieldDelegate {
             
         }
         List.saveList(list: lists)
-        //print("retunToHome",lists!)
         return true
     }
 

@@ -28,11 +28,9 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
 
     var ImageUpdated: Bool!
     
-    var editable: Bool!
+    var editable = true
     
     @IBOutlet var addPhotoButton: UIBarButtonItem!
-    
-    
     
     func updateUI() {
         if let target {
@@ -41,37 +39,29 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             targetRemarks.text = target.remarks
             
             if let imageName = target.imageName {
-                
                 let imageUrl = URL.documentsDirectory.appending(path: imageName).appendingPathExtension(for: .jpeg)
                 let image = UIImage(contentsOfFile: imageUrl.path)
                 targetPhotoButton.imageView?.contentMode = .scaleAspectFill
                 targetPhotoButton.setImage(image, for: .normal)
-
             }
         }
-        
-        if editable != nil {
-            editable = false
-        } else {
-            editable = true
-        }
-        
         
         if editable == true {
             targetName.becomeFirstResponder()
             editButton.isHidden = true
             saveButton.isHidden = false
             addPhotoButton.isHidden = false
+            targetName.isUserInteractionEnabled = true
+            targetStatus.isUserInteractionEnabled = true
+            targetRemarks.isEditable = true
+            
         } else {
             targetName.isUserInteractionEnabled = false
             targetStatus.isUserInteractionEnabled = false
             targetRemarks.isEditable = false
-
             editButton.isHidden = false
             saveButton.isHidden = true
             addPhotoButton.isHidden = true
-            
-            
         }
     }
     
@@ -99,7 +89,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(list)
+    
         updateUI()
         
         // Uncomment the following line to preserve selection between presentations
@@ -129,9 +119,7 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
             try? imageData?.write(to: imageUrl)
         }
         
-        
         target = Target(name: targetName, status: status, remarks: remarks, imageName: imageName)
-        print("7777",target)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -172,15 +160,8 @@ class DetailTableViewController: UITableViewController, PHPickerViewControllerDe
     }
     
     @IBAction func edit(_ sender: UIButton) {
-        
-        sender.isHidden = true
-        saveButton.isHidden = false
-        addPhotoButton.isHidden = false
-        
-        targetName.isUserInteractionEnabled = true
-        targetStatus.isUserInteractionEnabled = true
-        targetRemarks.isEditable = true
-        
+        editable = true
+        updateUI()
     }
     
 
